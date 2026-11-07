@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "proyecto": "Mesita de trabajo",
+    "autor": "Justina",
+    "fotos": [
+      "fotos/mesita-de-trabajo-justina/01.jpg"
+    ],
+    "nota": "Inspiración · en proceso"
+  }
+]

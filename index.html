@@ -91,6 +91,16 @@ main { max-width: 1180px; margin: 0 auto; padding: 40px 20px 80px; }
 .pie h2 { margin: 0; font: 500 21px/1.25 "Fraunces", Georgia, serif; }
 .pie p { margin: 4px 0 0; color: var(--tenue); font-size: 15px; }
 .cuenta { color: var(--veta); font-size: 13px; margin-top: 8px !important; }
+.nota {
+  display: inline-block;
+  margin-top: 10px !important;
+  padding: 2px 10px;
+  border: 1px solid var(--veta);
+  border-radius: 99px;
+  color: var(--veta) !important;
+  font-size: 13px !important;
+}
+.visor .nota-visor { color: #d39a5c; font-size: 14px; }
 .vacio { color: var(--tenue); font-style: italic; }
 
 dialog {
@@ -140,7 +150,7 @@ footer { max-width: 1180px; margin: 0 auto; padding: 0 20px 48px; color: var(--t
 <main>
   <div class="grilla" id="grilla"><p class="vacio">Cargando…</p></div>
 </main>
-<footer>Fotos publicadas con permiso de sus autores.</footer>
+<footer>Fotos publicadas con permiso de sus autores. Las marcadas como inspiración son imágenes de referencia, no el trabajo del alumno.</footer>
 
 <dialog id="visor" aria-label="Fotos del proyecto">
   <div class="visor">
@@ -151,6 +161,7 @@ footer { max-width: 1180px; margin: 0 auto; padding: 0 20px 48px; color: var(--t
     <div class="puntos" id="puntos"></div>
     <div class="titulo" id="titulo"></div>
     <div class="autor" id="autor"></div>
+    <div class="nota-visor" id="nota"></div>
   </div>
 </dialog>
 
@@ -165,6 +176,7 @@ function mostrar() {
   document.getElementById("foto").alt = `${p.proyecto}, foto ${i + 1} de ${p.fotos.length}`;
   document.getElementById("titulo").textContent = p.proyecto;
   document.getElementById("autor").textContent = p.autor;
+  document.getElementById("nota").textContent = p.nota || "";
   document.getElementById("puntos").innerHTML = p.fotos.length > 1
     ? p.fotos.map((_, k) => `<span class="${k === i ? "activo" : ""}"></span>`).join("") : "";
   document.getElementById("ant").hidden = document.getElementById("sig").hidden = p.fotos.length < 2;
@@ -207,6 +219,12 @@ fetch("proyectos.json", { cache: "no-cache" })
         c.className = "cuenta";
         c.textContent = `${p.fotos.length} fotos`;
         b.querySelector(".pie").append(c);
+      }
+      if (p.nota) {
+        const n = document.createElement("p");
+        n.className = "nota";
+        n.textContent = p.nota;
+        b.querySelector(".pie").append(n);
       }
       b.onclick = () => { actual = p; i = 0; mostrar(); visor.showModal(); };
       grilla.append(b);

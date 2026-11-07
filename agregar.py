@@ -5,6 +5,9 @@ Uso:  python agregar.py "Banqueta de pino" "Laura" foto1.jpg foto2.jpg ...
 Achica cada foto a 1600 px de lado mayor, la guarda como JPG en fotos/<proyecto>/ y le borra
 los metadatos (EXIF), que pueden traer la ubicación GPS. La primera foto es la portada.
 Si el proyecto ya existe (mismo nombre y autor), le suma las fotos nuevas.
+
+Opcional, al final: --nota "Inspiración: foto de referencia" pone (o cambia) una nota en la ficha.
+Con --nota "" se borra.
 """
 import json
 import re
@@ -30,14 +33,23 @@ def slug(texto):
 
 
 def main():
-    if len(sys.argv) < 4:
+    args, nota = sys.argv[1:], None
+    if "--nota" in args:
+        k = args.index("--nota")
+        nota, args = args[k + 1].strip(), args[:k] + args[k + 2:]
+    if len(args) < 2 or (len(args) < 3 and nota is None):
         sys.exit(__doc__)
-    proyecto, autor, fotos = sys.argv[1].strip(), sys.argv[2].strip(), sys.argv[3:]
+    proyecto, autor, fotos = args[0].strip(), args[1].strip(), args[2:]
     datos = json.loads((AQUI / "proyectos.json").read_text(encoding="utf-8"))
     p = next((x for x in datos if x["proyecto"] == proyecto and x["autor"] == autor), None)
     if p is None:
         p = {"proyecto": proyecto, "autor": autor, "fotos": []}
         datos.append(p)
+    if nota is not None:
+        if nota:
+            p["nota"] = nota
+        else:
+            p.pop("nota", None)
     carpeta = AQUI / "fotos" / slug(f"{proyecto}-{autor}")
     carpeta.mkdir(parents=True, exist_ok=True)
     for f in fotos:
