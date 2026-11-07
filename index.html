@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyectos de carpintería</title>
+<meta name="description" content="Los proyectos individuales de las clases de carpintería.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fondo: #f4efe6;
+  --papel: #fbf8f2;
+  --tinta: #2b2118;
+  --tenue: #75685a;
+  --veta: #b0773e;
+  --linea: #e2d8c8;
+  --sombra: 0 1px 2px rgba(43, 33, 24, .08), 0 8px 24px rgba(43, 33, 24, .08);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #1d1813;
+    --papel: #262019;
+    --tinta: #efe6d8;
+    --tenue: #a8998a;
+    --veta: #d39a5c;
+    --linea: #3a3128;
+    --sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .3);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font: 400 17px/1.55 "Work Sans", system-ui, sans-serif;
+}
+header {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 72px 20px 36px;
+  border-bottom: 1px solid var(--linea);
+}
+.sobre {
+  margin: 0 0 10px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--veta);
+  font-weight: 500;
+}
+h1 {
+  margin: 0;
+  font: 700 clamp(38px, 7vw, 72px)/1.02 "Fraunces", Georgia, serif;
+  letter-spacing: -.02em;
+}
+.bajada { margin: 16px 0 0; max-width: 46ch; color: var(--tenue); font-size: 18px; }
+main { max-width: 1180px; margin: 0 auto; padding: 40px 20px 80px; }
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+}
+.ficha {
+  background: var(--papel);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.ficha:hover, .ficha:focus-visible { transform: translateY(-3px); }
+.ficha:focus-visible { outline: 2px solid var(--veta); outline-offset: 3px; }
+.ficha img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--linea);
+}
+.pie { padding: 16px 18px 18px; }
+.pie h2 { margin: 0; font: 500 21px/1.25 "Fraunces", Georgia, serif; }
+.pie p { margin: 4px 0 0; color: var(--tenue); font-size: 15px; }
+.cuenta { color: var(--veta); font-size: 13px; margin-top: 8px !important; }
+.vacio { color: var(--tenue); font-style: italic; }
+
+dialog {
+  border: 0;
+  padding: 0;
+  max-width: min(1100px, 100vw);
+  width: 100%;
+  background: transparent;
+  color: #f4efe6;
+}
+dialog::backdrop { background: rgba(20, 15, 10, .92); }
+.visor { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px; }
+.visor img { max-width: 100%; max-height: 78vh; object-fit: contain; border-radius: 4px; }
+.visor .titulo { font: 500 20px "Fraunces", Georgia, serif; text-align: center; }
+.visor .autor { color: #c9bba8; font-size: 15px; }
+.boton {
+  position: absolute;
+  background: rgba(0, 0, 0, .45);
+  color: #fff;
+  border: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+.boton:hover { background: rgba(0, 0, 0, .7); }
+.cerrar { top: 8px; right: 8px; }
+.ant { left: 8px; top: 40%; }
+.sig { right: 8px; top: 40%; }
+.puntos { display: flex; gap: 6px; }
+.puntos span { width: 7px; height: 7px; border-radius: 50%; background: #6b5d4e; }
+.puntos span.activo { background: #f4efe6; }
+footer { max-width: 1180px; margin: 0 auto; padding: 0 20px 48px; color: var(--tenue); font-size: 14px; }
+@media (max-width: 600px) {
+  header { padding-top: 48px; }
+  .grilla { gap: 20px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <p class="sobre">Clases de carpintería</p>
+  <h1>Proyectos</h1>
+  <p class="bajada">Lo que cada uno hizo con sus manos, de la madera en bruto a la pieza terminada.</p>
+</header>
+<main>
+  <div class="grilla" id="grilla"><p class="vacio">Cargando…</p></div>
+</main>
+<footer>Fotos publicadas con permiso de sus autores.</footer>
+
+<dialog id="visor" aria-label="Fotos del proyecto">
+  <div class="visor">
+    <button class="boton cerrar" id="cerrar" aria-label="Cerrar">×</button>
+    <button class="boton ant" id="ant" aria-label="Foto anterior">‹</button>
+    <button class="boton sig" id="sig" aria-label="Foto siguiente">›</button>
+    <img id="foto" alt="">
+    <div class="puntos" id="puntos"></div>
+    <div class="titulo" id="titulo"></div>
+    <div class="autor" id="autor"></div>
+  </div>
+</dialog>
+
+<script>
+const grilla = document.getElementById("grilla");
+const visor = document.getElementById("visor");
+let actual = null, i = 0;
+
+function mostrar() {
+  const p = actual;
+  document.getElementById("foto").src = p.fotos[i];
+  document.getElementById("foto").alt = `${p.proyecto}, foto ${i + 1} de ${p.fotos.length}`;
+  document.getElementById("titulo").textContent = p.proyecto;
+  document.getElementById("autor").textContent = p.autor;
+  document.getElementById("puntos").innerHTML = p.fotos.length > 1
+    ? p.fotos.map((_, k) => `<span class="${k === i ? "activo" : ""}"></span>`).join("") : "";
+  document.getElementById("ant").hidden = document.getElementById("sig").hidden = p.fotos.length < 2;
+}
+function mover(d) { if (!actual) return; i = (i + d + actual.fotos.length) % actual.fotos.length; mostrar(); }
+
+document.getElementById("cerrar").onclick = () => visor.close();
+document.getElementById("ant").onclick = () => mover(-1);
+document.getElementById("sig").onclick = () => mover(1);
+visor.addEventListener("click", e => { if (e.target === visor) visor.close(); });
+document.addEventListener("keydown", e => {
+  if (!visor.open) return;
+  if (e.key === "ArrowLeft") mover(-1);
+  if (e.key === "ArrowRight") mover(1);
+});
+let x0 = null;
+visor.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+visor.addEventListener("touchend", e => {
+  if (x0 === null) return;
+  const dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 40) mover(dx < 0 ? 1 : -1);
+  x0 = null;
+});
+
+fetch("proyectos.json", { cache: "no-cache" })
+  .then(r => r.json())
+  .then(lista => {
+    if (!lista.length) { grilla.innerHTML = '<p class="vacio">Pronto, los primeros proyectos.</p>'; return; }
+    grilla.innerHTML = "";
+    lista.forEach(p => {
+      const b = document.createElement("button");
+      b.className = "ficha";
+      b.innerHTML = `<img loading="lazy" alt=""><div class="pie"><h2></h2><p></p></div>`;
+      b.querySelector("img").src = p.fotos[0];
+      b.querySelector("img").alt = p.proyecto;
+      b.querySelector("h2").textContent = p.proyecto;
+      b.querySelector("p").textContent = p.autor;
+      if (p.fotos.length > 1) {
+        const c = document.createElement("p");
+        c.className = "cuenta";
+        c.textContent = `${p.fotos.length} fotos`;
+        b.querySelector(".pie").append(c);
+      }
+      b.onclick = () => { actual = p; i = 0; mostrar(); visor.showModal(); };
+      grilla.append(b);
+    });
+  })
+  .catch(() => { grilla.innerHTML = '<p class="vacio">No se pudieron cargar los proyectos.</p>'; });
+</script>
+</body>
+</html>
